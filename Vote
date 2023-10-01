@@ -1,0 +1,19 @@
+function deleteDuplicateEntries() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var sapIdColumn = 2; // Change this to the column number where SAP IDs are stored (1-based index)
+
+  var data = sheet.getDataRange().getValues();
+  var sapIdMap = {};
+
+  // Iterate through the rows and keep the first occurrence of each SAP ID
+  for (var row = 1; row < data.length; row++) { // Start from the second row
+    var sapId = data[row][sapIdColumn - 1]; // Get SAP ID from the current row
+
+    if (sapIdMap[sapId] === undefined) {
+      sapIdMap[sapId] = row;
+    } else {
+      // Delete duplicate entry
+      sheet.deleteRow(row + 1); // Adjust for 1-based indexing
+    }
+  }
+}
